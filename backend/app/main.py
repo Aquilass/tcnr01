@@ -10,6 +10,8 @@ from app.api.v1 import api_router
 async def lifespan(app: FastAPI):
     # Startup
     create_db_and_tables()
+    from app.db.seed import seed_data
+    seed_data()
     yield
     # Shutdown
 

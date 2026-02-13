@@ -10,8 +10,9 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5173,
+    port: 3737,
     host: '0.0.0.0',
+    allowedHosts: ['tcnr01.aquilass.com'],
     proxy: {
       '/api': {
         target: process.env.VITE_API_URL || 'http://localhost:8000',

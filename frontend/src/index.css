@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-white text-tcnr01-black;
+  }
+
+  * {
+    @apply box-border;
+  }
+}
+
+@layer components {
+  /* TCNR01 按鈕樣式 */
+  .tcnr01-btn {
+    @apply inline-flex items-center justify-center px-6 h-14
+           font-medium text-tcnr01-base rounded-tcnr01-full
+           transition-all duration-tcnr01 relative overflow-hidden;
+  }
+
+  .tcnr01-btn-primary {
+    @apply tcnr01-btn bg-tcnr01-black text-white hover:bg-tcnr01-gray-600;
+  }
+
+  .tcnr01-btn-secondary {
+    @apply tcnr01-btn bg-white text-tcnr01-black border border-tcnr01-gray-200
+           hover:border-tcnr01-black;
+  }
+
+  .tcnr01-btn-disabled {
+    @apply tcnr01-btn bg-tcnr01-gray-100 text-tcnr01-gray-300 cursor-not-allowed;
+  }
+
+  /* TCNR01 連結樣式 */
+  .tcnr01-link {
+    @apply text-tcnr01-black underline underline-offset-4
+           hover:text-tcnr01-gray-300 transition-colors duration-tcnr01;
+  }
+
+  /* TCNR01 輸入框樣式 */
+  .tcnr01-input {
+    @apply w-full px-4 py-3 border border-tcnr01-gray-200 rounded-tcnr01
+           text-tcnr01-base placeholder:text-tcnr01-gray-300
+           focus:outline-none focus:border-tcnr01-black transition-colors duration-tcnr01;
+  }
+
+  /* TCNR01 卡片樣式 */
+  .tcnr01-card {
+    @apply bg-white rounded-tcnr01 overflow-hidden;
+  }
+
+  /* TCNR01 產品圖片容器 */
+  .tcnr01-product-image {
+    @apply aspect-tcnr01-product bg-tcnr01-gray-50 relative overflow-hidden;
+  }
+
+  /* TCNR01 尺寸選擇器 */
+  .tcnr01-size-btn {
+    @apply flex items-center justify-center h-12 border border-tcnr01-gray-200
+           rounded-tcnr01 text-tcnr01-base font-medium cursor-pointer
+           hover:border-tcnr01-black transition-colors duration-tcnr01;
+  }
+
+  .tcnr01-size-btn-selected {
+    @apply tcnr01-size-btn border-tcnr01-black;
+  }
+
+  .tcnr01-size-btn-disabled {
+    @apply tcnr01-size-btn text-tcnr01-gray-200 cursor-not-allowed
+           hover:border-tcnr01-gray-200 line-through;
+  }
+
+  /* TCNR01 顏色選擇器 */
+  .tcnr01-color-btn {
+    @apply w-[60px] h-[60px] rounded-tcnr01 overflow-hidden cursor-pointer
+           ring-offset-2 hover:ring-2 hover:ring-tcnr01-gray-200 transition-all duration-tcnr01;
+  }
+
+  .tcnr01-color-btn-selected {
+    @apply tcnr01-color-btn ring-2 ring-tcnr01-black;
+  }
+}
+
+@layer utilities {
+  /* 隱藏滾動條但保留滾動功能 */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* TCNR01 風格的文字截斷 */
+  .tcnr01-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

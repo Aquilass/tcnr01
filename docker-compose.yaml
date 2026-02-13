@@ -18,7 +18,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "8001:8000"
     environment:
       DATABASE_URL: postgresql://tcnr01:tcnr01123@db:5432/tcnr01_db
     depends_on:

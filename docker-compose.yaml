@@ -18,7 +18,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     expose:
-      - "8000"
+      - "8787"
     environment:
       DATABASE_URL: postgresql://tcnr01:tcnr01123@db:5432/tcnr01_db
     depends_on:
@@ -30,11 +30,11 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     expose:
-      - "5173"
+      - "3737"
     depends_on:
       - backend
     environment:
-      - VITE_API_URL=http://backend:8000
+      - VITE_API_URL=http://backend:8787
 
 volumes:
   postgres_data:

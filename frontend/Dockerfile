@@ -10,7 +10,7 @@ RUN npm install
 COPY . .
 
 # Expose port
-EXPOSE 5173
+EXPOSE 3737
 
 # Run the application
-CMD ["npx", "vite", "--host", "0.0.0.0"]
+CMD ["npx", "vite", "--host", "0.0.0.0", "--port", "3737"]

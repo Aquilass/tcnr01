@@ -17,8 +17,8 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    expose:
-      - "8787"
+    ports:
+      - "8787:8787"
     environment:
       DATABASE_URL: postgresql://tcnr01:tcnr01123@db:5432/tcnr01_db
     depends_on:
@@ -29,8 +29,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    expose:
-      - "3737"
+    ports:
+      - "3737:3737"
     depends_on:
       - backend
     environment:

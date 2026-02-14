@@ -5,6 +5,7 @@ from typing import Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from app.models.cart import Cart
+    from app.models.order import Order
 
 
 class User(SQLModel, table=True):
@@ -27,3 +28,4 @@ class User(SQLModel, table=True):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
     carts: list["Cart"] = Relationship(back_populates="user")
+    orders: list["Order"] = Relationship(back_populates="user")

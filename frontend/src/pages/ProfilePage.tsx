@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
 import { authService } from '@/services/authService'
 import { Button } from '@/components/ui'
@@ -240,6 +240,31 @@ export default function ProfilePage() {
             )}
           </form>
         </div>
+
+        {/* Orders Link */}
+        <Link
+          to="/orders"
+          className="block bg-white rounded-tcnr01-lg border border-tcnr01-gray-100 p-6 mb-6 hover:border-tcnr01-gray-300 transition-colors"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-tcnr01-lg font-medium">我的訂單</h2>
+              <p className="text-tcnr01-sm text-tcnr01-gray-400 mt-1">查看訂單歷史紀錄</p>
+            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              className="text-tcnr01-gray-400"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+        </Link>
 
         {/* Password Section */}
         <div className="bg-white rounded-tcnr01-lg border border-tcnr01-gray-100 p-6 mb-6">

@@ -144,3 +144,59 @@ export interface UpdateProfileRequest {
   postal_code?: string
   country?: string
 }
+
+// 訂單相關類型
+export interface OrderItem {
+  id: string
+  productId: string
+  productName: string
+  productImage: string
+  colorId: string
+  colorName: string
+  sizeId: string
+  size: string
+  price: number
+  quantity: number
+}
+
+export interface Order {
+  id: string
+  orderNumber: string
+  status: string
+  paymentMethod: string
+  paymentStatus: string
+  itemsTotal: number
+  shippingFee: number
+  totalAmount: number
+  recipientName: string
+  recipientPhone: string
+  shippingAddress: string
+  shippingCity?: string
+  shippingState?: string
+  shippingPostalCode?: string
+  notes?: string
+  items: OrderItem[]
+  createdAt: string
+  updatedAt: string
+}
+
+export interface OrderListItem {
+  id: string
+  orderNumber: string
+  status: string
+  totalAmount: number
+  itemCount: number
+  firstItemImage: string
+  createdAt: string
+}
+
+export interface CreateOrderRequest {
+  recipient_name: string
+  recipient_phone: string
+  shipping_address: string
+  shipping_city?: string
+  shipping_state?: string
+  shipping_postal_code?: string
+  payment_method?: string
+  notes?: string
+}

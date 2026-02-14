@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '@/context/CartContext'
 import { CartItem } from '@/components/cart'
 import { Button } from '@/components/ui'
@@ -6,6 +6,7 @@ import { formatPrice } from '@/utils/format'
 
 export default function CartPage() {
   const { cart, isLoading, clearCart } = useCart()
+  const navigate = useNavigate()
 
   const isEmpty = !cart || cart.items.length === 0
 
@@ -100,7 +101,7 @@ export default function CartPage() {
             </div>
 
             <div className="pt-6 space-y-4">
-              <Button size="lg" className="w-full">
+              <Button size="lg" className="w-full" onClick={() => navigate('/checkout')}>
                 前往結帳
               </Button>
               <p className="text-tcnr01-xs text-tcnr01-gray-400 text-center">

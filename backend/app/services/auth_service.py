@@ -46,7 +46,10 @@ class AuthService:
         self.session.refresh(user)
 
         if session_id:
-            self._merge_cart(session_id, user.id)
+            try:
+                self._merge_cart(session_id, user.id)
+            except Exception:
+                pass
 
         return TokenResponse(
             access_token=create_access_token(user.id),
@@ -63,7 +66,10 @@ class AuthService:
             raise BadRequestError("Account is inactive")
 
         if session_id:
-            self._merge_cart(session_id, user.id)
+            try:
+                self._merge_cart(session_id, user.id)
+            except Exception:
+                pass
 
         return TokenResponse(
             access_token=create_access_token(user.id),

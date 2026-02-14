@@ -10,12 +10,14 @@ router = APIRouter()
 @router.get("", response_model=dict)
 def get_products(
     category: str | None = Query(None),
+    search: str | None = Query(None),
+    sort: str | None = Query(None),
     page: int = Query(1, ge=1),
     page_size: int = Query(24, ge=1, le=100),
     session: Session = Depends(get_session),
 ):
     service = ProductService(session)
-    products, total = service.get_products(category, page, page_size)
+    products, total = service.get_products(category, page, page_size, search=search, sort=sort)
     total_pages = (total + page_size - 1) // page_size
 
     return {

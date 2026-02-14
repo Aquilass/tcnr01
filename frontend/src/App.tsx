@@ -11,6 +11,8 @@ import OrderDetailPage from '@/pages/OrderDetailPage'
 import LoginPage from '@/pages/LoginPage'
 import RegisterPage from '@/pages/RegisterPage'
 import ProfilePage from '@/pages/ProfilePage'
+import WishlistPage from '@/pages/WishlistPage'
+import NotFoundPage from '@/pages/NotFoundPage'
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 
 function App() {
@@ -42,6 +44,15 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="wishlist"
+          element={
+            <ProtectedRoute>
+              <WishlistPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   )

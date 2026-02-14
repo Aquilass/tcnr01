@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '@/context/CartContext'
 import { Drawer } from '@/components/ui'
 import { CartItem } from './CartItem'
@@ -6,6 +6,7 @@ import { formatPrice } from '@/utils/format'
 
 export function CartDrawer() {
   const { cart, isLoading, isDrawerOpen, closeDrawer } = useCart()
+  const navigate = useNavigate()
 
   const isEmpty = !cart || cart.items.length === 0
 
@@ -71,7 +72,10 @@ export function CartDrawer() {
               >
                 檢視購物袋
               </Link>
-              <button className="tcnr01-btn-primary w-full">
+              <button
+                className="tcnr01-btn-primary w-full"
+                onClick={() => { closeDrawer(); navigate('/checkout') }}
+              >
                 結帳
               </button>
             </div>

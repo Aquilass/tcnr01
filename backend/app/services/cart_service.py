@@ -203,6 +203,7 @@ class CartService:
                 CartItemResponse(
                     id=item.id,
                     productId=product.id,
+                    productSlug=product.slug,
                     productName=product.name,
                     productImage=main_image.url if main_image else "",
                     colorId=item.color_id,

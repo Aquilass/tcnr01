@@ -28,6 +28,14 @@ def _apply_schema_updates():
                     "ALTER TABLE carts ALTER COLUMN session_id DROP NOT NULL"
                 ))
 
+    if "order_items" in inspector.get_table_names():
+        columns = [c["name"] for c in inspector.get_columns("order_items")]
+        if "product_slug" not in columns:
+            with engine.begin() as conn:
+                conn.execute(text(
+                    "ALTER TABLE order_items ADD COLUMN product_slug VARCHAR NOT NULL DEFAULT ''"
+                ))
+
 
 def get_session():
     with Session(engine) as session:

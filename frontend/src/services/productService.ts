@@ -3,6 +3,8 @@ import type { Product, ProductListItem, PaginatedResponse } from '@/types'
 
 export interface GetProductsParams {
   category?: string
+  search?: string
+  sort?: string
   page?: number
   pageSize?: number
 }

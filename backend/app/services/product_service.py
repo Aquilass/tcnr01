@@ -13,14 +13,27 @@ class ProductService:
         category: str | None = None,
         page: int = 1,
         page_size: int = 24,
+        search: str | None = None,
+        sort: str | None = None,
     ) -> tuple[list[ProductListItemResponse], int]:
         query = select(Product)
 
         if category:
             query = query.where(Product.category == category)
 
+        if search:
+            query = query.where(Product.name.ilike(f"%{search}%"))
+
         # Get total count
         total = len(self.session.exec(query).all())
+
+        # Apply sorting
+        if sort == "price-asc":
+            query = query.order_by(Product.price.asc())
+        elif sort == "price-desc":
+            query = query.order_by(Product.price.desc())
+        else:
+            query = query.order_by(Product.created_at.desc())
 
         # Apply pagination
         offset = (page - 1) * page_size

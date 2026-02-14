@@ -179,12 +179,16 @@ export default function HomePage() {
             加入 TCNR01 會員，搶先獲取最新產品資訊、獨家優惠和會員專屬活動邀請。
           </p>
           <div className="flex justify-center gap-4">
-            <Button variant="secondary" size="lg" className="bg-white text-tcnr01-black hover:bg-tcnr01-gray-100">
-              加入會員
-            </Button>
-            <Button variant="secondary" size="lg" className="border-white text-white hover:bg-white/10">
-              登入
-            </Button>
+            <Link to="/register">
+              <Button variant="secondary" size="lg" className="bg-white text-tcnr01-black hover:bg-tcnr01-gray-100">
+                加入會員
+              </Button>
+            </Link>
+            <Link to="/login">
+              <Button variant="secondary" size="lg" className="border-white text-white hover:bg-white/10">
+                登入
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

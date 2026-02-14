@@ -6,6 +6,7 @@ from typing import Optional
 class CartItemResponse(BaseModel):
     id: str
     productId: str
+    productSlug: str
     productName: str
     productImage: str
     colorId: str

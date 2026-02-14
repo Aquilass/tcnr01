@@ -6,6 +6,7 @@ from typing import Optional, TYPE_CHECKING
 if TYPE_CHECKING:
     from app.models.cart import Cart
     from app.models.order import Order
+    from app.models.wishlist import WishlistItem
 
 
 class User(SQLModel, table=True):
@@ -29,3 +30,4 @@ class User(SQLModel, table=True):
 
     carts: list["Cart"] = Relationship(back_populates="user")
     orders: list["Order"] = Relationship(back_populates="user")
+    wishlist_items: list["WishlistItem"] = Relationship(back_populates="user")

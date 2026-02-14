@@ -1,5 +1,8 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useCart } from '@/context/CartContext'
+import { useWishlist } from '@/context/WishlistContext'
+import { useAuth } from '@/context/AuthContext'
 import { Button } from '@/components/ui'
 
 interface AddToCartButtonProps {
@@ -11,10 +14,15 @@ interface AddToCartButtonProps {
 
 export function AddToCartButton({ productId, colorId, sizeId, disabled }: AddToCartButtonProps) {
   const { addItem } = useCart()
+  const { isAuthenticated } = useAuth()
+  const { addItem: addToWishlist, removeItem: removeFromWishlist, isWishlisted } = useWishlist()
+  const navigate = useNavigate()
   const [isAdding, setIsAdding] = useState(false)
+  const [isTogglingWishlist, setIsTogglingWishlist] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const isDisabled = disabled || !colorId || !sizeId
+  const wishlisted = isWishlisted(productId)
 
   const handleAddToCart = async () => {
     if (isDisabled || !colorId || !sizeId) {
@@ -43,6 +51,26 @@ export function AddToCartButton({ productId, colorId, sizeId, disabled }: AddToC
     }
   }
 
+  const handleToggleWishlist = async () => {
+    if (!isAuthenticated) {
+      navigate('/login')
+      return
+    }
+
+    setIsTogglingWishlist(true)
+    try {
+      if (wishlisted) {
+        await removeFromWishlist(productId)
+      } else {
+        await addToWishlist(productId)
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '操作失敗')
+    } finally {
+      setIsTogglingWishlist(false)
+    }
+  }
+
   return (
     <div className="space-y-3">
       <Button
@@ -59,9 +87,14 @@ export function AddToCartButton({ productId, colorId, sizeId, disabled }: AddToC
         variant="secondary"
         size="lg"
         className="w-full"
-        disabled={isDisabled}
+        onClick={handleToggleWishlist}
+        disabled={isTogglingWishlist}
       >
-        加入最愛 ♡
+        {isTogglingWishlist
+          ? '處理中...'
+          : wishlisted
+            ? '已收藏 ♥'
+            : '加入最愛 ♡'}
       </Button>
 
       {error && (

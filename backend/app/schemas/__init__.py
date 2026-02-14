@@ -26,6 +26,11 @@ from app.schemas.order import (
     OrderResponse,
     OrderListItem,
 )
+from app.schemas.wishlist import (
+    AddWishlistRequest,
+    WishlistItemResponse,
+    WishlistResponse,
+)
 
 __all__ = [
     "ProductResponse",
@@ -48,4 +53,7 @@ __all__ = [
     "OrderItemResponse",
     "OrderResponse",
     "OrderListItem",
+    "AddWishlistRequest",
+    "WishlistItemResponse",
+    "WishlistResponse",
 ]

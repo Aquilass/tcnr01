@@ -51,6 +51,7 @@ export interface ProductListItem {
 export interface CartItem {
   id: string
   productId: string
+  productSlug: string
   productName: string
   productImage: string
   colorId: string
@@ -149,6 +150,7 @@ export interface UpdateProfileRequest {
 export interface OrderItem {
   id: string
   productId: string
+  productSlug: string
   productName: string
   productImage: string
   colorId: string
@@ -188,6 +190,22 @@ export interface OrderListItem {
   itemCount: number
   firstItemImage: string
   createdAt: string
+}
+
+// 收藏相關類型
+export interface WishlistItem {
+  id: string
+  productId: string
+  productName: string
+  productImage: string
+  productSlug: string
+  price: number
+  createdAt: string
+}
+
+export interface Wishlist {
+  items: WishlistItem[]
+  count: number
 }
 
 export interface CreateOrderRequest {

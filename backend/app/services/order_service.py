@@ -80,6 +80,7 @@ class OrderService:
             order_items.append(
                 OrderItem(
                     product_id=product.id,
+                    product_slug=product.slug,
                     product_name=product.name,
                     product_image=main_image.url if main_image else "",
                     color_id=cart_item.color_id,
@@ -189,6 +190,7 @@ class OrderService:
             OrderItemResponse(
                 id=item.id,
                 productId=item.product_id,
+                productSlug=item.product_slug,
                 productName=item.product_name,
                 productImage=item.product_image,
                 colorId=item.color_id,

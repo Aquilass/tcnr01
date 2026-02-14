@@ -63,7 +63,7 @@ export interface CartItem {
 
 export interface Cart {
   id: string
-  sessionId: string
+  sessionId?: string
   items: CartItem[]
   itemCount: number
   subtotal: number
@@ -95,4 +95,52 @@ export interface AddToCartRequest {
 
 export interface UpdateCartItemRequest {
   quantity: number
+}
+
+// 使用者相關類型
+export interface User {
+  id: string
+  email: string
+  first_name: string
+  last_name: string
+  phone?: string
+  address_line1?: string
+  address_line2?: string
+  city?: string
+  state?: string
+  postal_code?: string
+  country: string
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface AuthTokens {
+  access_token: string
+  refresh_token: string
+  token_type: string
+}
+
+export interface RegisterRequest {
+  email: string
+  password: string
+  first_name: string
+  last_name: string
+}
+
+export interface LoginRequest {
+  email: string
+  password: string
+}
+
+export interface UpdateProfileRequest {
+  first_name?: string
+  last_name?: string
+  phone?: string
+  address_line1?: string
+  address_line2?: string
+  city?: string
+  state?: string
+  postal_code?: string
+  country?: string
 }

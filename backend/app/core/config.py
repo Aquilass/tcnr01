@@ -10,6 +10,12 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = "postgresql://tcnr01:tcnr01123@localhost:5432/tcnr01_db"
 
+    # JWT
+    SECRET_KEY: str = "super-secret-key-change-in-production"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 7
+
     # CORS
     BACKEND_CORS_ORIGINS: list[str] = ["http://localhost:5173", "http://localhost:3000"]
 

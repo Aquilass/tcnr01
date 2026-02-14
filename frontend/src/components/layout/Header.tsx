@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useCart } from '@/context/CartContext'
+import { useAuth } from '@/context/AuthContext'
 
 export function Header() {
   const { cart, openDrawer } = useCart()
+  const { isAuthenticated } = useAuth()
 
   return (
     <header className="sticky top-0 z-30 bg-white border-b border-tcnr01-gray-100">
@@ -70,6 +72,37 @@ export function Header() {
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
             </button>
+
+            {/* User */}
+            {isAuthenticated ? (
+              <Link
+                to="/profile"
+                className="p-2 hover:bg-tcnr01-gray-50 rounded-full transition-colors"
+                aria-label="帳戶"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="text-tcnr01-sm font-medium hover:text-tcnr01-gray-400 transition-colors"
+              >
+                登入
+              </Link>
+            )}
 
             {/* Cart */}
             <button

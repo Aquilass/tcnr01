@@ -11,6 +11,15 @@ from app.schemas.cart import (
     AddToCartRequest,
     UpdateCartItemRequest,
 )
+from app.schemas.user import (
+    UserRegisterRequest,
+    UserLoginRequest,
+    TokenResponse,
+    RefreshTokenRequest,
+    UserResponse,
+    UserUpdateRequest,
+    ChangePasswordRequest,
+)
 
 __all__ = [
     "ProductResponse",
@@ -22,4 +31,11 @@ __all__ = [
     "CartItemResponse",
     "AddToCartRequest",
     "UpdateCartItemRequest",
+    "UserRegisterRequest",
+    "UserLoginRequest",
+    "TokenResponse",
+    "RefreshTokenRequest",
+    "UserResponse",
+    "UserUpdateRequest",
+    "ChangePasswordRequest",
 ]

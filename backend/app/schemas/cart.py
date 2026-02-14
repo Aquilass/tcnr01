@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
+from typing import Optional
 
 
 class CartItemResponse(BaseModel):
@@ -20,7 +21,7 @@ class CartItemResponse(BaseModel):
 
 class CartResponse(BaseModel):
     id: str
-    sessionId: str
+    sessionId: Optional[str] = None
     items: list[CartItemResponse]
     itemCount: int
     subtotal: float

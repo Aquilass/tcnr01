@@ -5,3 +5,7 @@ psycopg2-binary==2.9.10
 alembic==1.14.0
 python-dotenv==1.0.1
 pydantic-settings==2.6.1
+PyJWT[crypto]>=2.8.0
+pwdlib[argon2,bcrypt]>=0.2.0
+python-multipart>=0.0.12
+email-validator>=2.1.0

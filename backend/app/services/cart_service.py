@@ -1,5 +1,6 @@
 from sqlmodel import Session, select
 from datetime import datetime
+from typing import Optional
 from app.models import Cart, CartItem, Product, ProductColor, ProductSize
 from app.schemas import CartResponse, CartItemResponse, AddToCartRequest
 from app.core.exceptions import (
@@ -14,33 +15,59 @@ class CartService:
     def __init__(self, session: Session):
         self.session = session
 
-    def get_or_create_cart(self, session_id: str) -> Cart:
-        query = select(Cart).where(Cart.session_id == session_id)
-        cart = self.session.exec(query).first()
+    def get_or_create_cart(
+        self, session_id: Optional[str] = None, user_id: Optional[str] = None
+    ) -> Cart:
+        if user_id:
+            cart = self.session.exec(
+                select(Cart).where(Cart.user_id == user_id)
+            ).first()
+            if not cart:
+                cart = Cart(user_id=user_id)
+                self.session.add(cart)
+                self.session.commit()
+                self.session.refresh(cart)
+            return cart
 
-        if not cart:
-            cart = Cart(session_id=session_id)
-            self.session.add(cart)
-            self.session.commit()
-            self.session.refresh(cart)
+        if session_id:
+            cart = self.session.exec(
+                select(Cart).where(
+                    Cart.session_id == session_id, Cart.user_id.is_(None)
+                )
+            ).first()
+            if not cart:
+                cart = Cart(session_id=session_id)
+                self.session.add(cart)
+                self.session.commit()
+                self.session.refresh(cart)
+            return cart
 
+        cart = Cart()
+        self.session.add(cart)
+        self.session.commit()
+        self.session.refresh(cart)
         return cart
 
-    def get_cart(self, session_id: str) -> CartResponse:
-        cart = self.get_or_create_cart(session_id)
+    def get_cart(
+        self, session_id: Optional[str] = None, user_id: Optional[str] = None
+    ) -> CartResponse:
+        cart = self.get_or_create_cart(session_id=session_id, user_id=user_id)
         return self._build_cart_response(cart)
 
-    def add_item(self, session_id: str, request: AddToCartRequest) -> CartResponse:
-        cart = self.get_or_create_cart(session_id)
+    def add_item(
+        self,
+        request: AddToCartRequest,
+        session_id: Optional[str] = None,
+        user_id: Optional[str] = None,
+    ) -> CartResponse:
+        cart = self.get_or_create_cart(session_id=session_id, user_id=user_id)
 
-        # Verify product exists
         product = self.session.exec(
             select(Product).where(Product.id == request.productId)
         ).first()
         if not product:
             raise ProductNotFoundError()
 
-        # Verify size exists and has stock
         size = self.session.exec(
             select(ProductSize).where(
                 ProductSize.id == request.sizeId,
@@ -52,7 +79,6 @@ class CartService:
         if size.stock < request.quantity:
             raise OutOfStockError()
 
-        # Check if item already exists in cart
         existing_item = self.session.exec(
             select(CartItem).where(
                 CartItem.cart_id == cart.id,
@@ -66,7 +92,7 @@ class CartService:
             new_quantity = existing_item.quantity + request.quantity
             if new_quantity > size.stock:
                 raise OutOfStockError()
-            existing_item.quantity = min(new_quantity, 10)  # Max 10 per item
+            existing_item.quantity = min(new_quantity, 10)
             existing_item.updated_at = datetime.utcnow()
         else:
             new_item = CartItem(
@@ -85,9 +111,13 @@ class CartService:
         return self._build_cart_response(cart)
 
     def update_item(
-        self, session_id: str, item_id: str, quantity: int
+        self,
+        item_id: str,
+        quantity: int,
+        session_id: Optional[str] = None,
+        user_id: Optional[str] = None,
     ) -> CartResponse:
-        cart = self.get_or_create_cart(session_id)
+        cart = self.get_or_create_cart(session_id=session_id, user_id=user_id)
 
         item = self.session.exec(
             select(CartItem).where(
@@ -101,7 +131,6 @@ class CartService:
         if quantity == 0:
             self.session.delete(item)
         else:
-            # Check stock
             size = self.session.exec(
                 select(ProductSize).where(ProductSize.id == item.size_id)
             ).first()
@@ -117,11 +146,20 @@ class CartService:
 
         return self._build_cart_response(cart)
 
-    def remove_item(self, session_id: str, item_id: str) -> CartResponse:
-        return self.update_item(session_id, item_id, 0)
+    def remove_item(
+        self,
+        item_id: str,
+        session_id: Optional[str] = None,
+        user_id: Optional[str] = None,
+    ) -> CartResponse:
+        return self.update_item(
+            item_id, 0, session_id=session_id, user_id=user_id
+        )
 
-    def clear_cart(self, session_id: str) -> CartResponse:
-        cart = self.get_or_create_cart(session_id)
+    def clear_cart(
+        self, session_id: Optional[str] = None, user_id: Optional[str] = None
+    ) -> CartResponse:
+        cart = self.get_or_create_cart(session_id=session_id, user_id=user_id)
 
         for item in cart.items:
             self.session.delete(item)
@@ -138,24 +176,20 @@ class CartService:
         item_count = 0
 
         for item in cart.items:
-            # Get product info
             product = self.session.exec(
                 select(Product).where(Product.id == item.product_id)
             ).first()
             if not product:
                 continue
 
-            # Get color info
             color = self.session.exec(
                 select(ProductColor).where(ProductColor.id == item.color_id)
             ).first()
 
-            # Get size info
             size = self.session.exec(
                 select(ProductSize).where(ProductSize.id == item.size_id)
             ).first()
 
-            # Get product image
             main_image = next(
                 (img for img in product.images if img.is_main),
                 product.images[0] if product.images else None,

@@ -36,33 +36,34 @@ export function Header() {
 
       {/* Main Header */}
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
-          {/* Hamburger (mobile) */}
-          <button
-            className="md:hidden p-2 -ml-2 hover:bg-tcnr01-gray-50 rounded-full transition-colors"
-            onClick={() => setIsMobileMenuOpen(true)}
-            aria-label="開啟選單"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-          </button>
-
-          {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
-            <svg
-              className="h-6 w-16"
-              viewBox="0 0 69.67 30.19"
-              fill="currentColor"
+        <div className="flex items-center h-16">
+          {/* Left: Hamburger (mobile) + Logo */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <button
+              className="md:hidden p-2 -ml-2 hover:bg-tcnr01-gray-50 rounded-full transition-colors"
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="開啟選單"
             >
-              <path d="M68.56 1.59C54.32 7.1 14.33 22.64 3.19 26.97c-3.7 1.44-6.53-.5-2.68-3.51 0 0 40.52-16.97 48.46-19.82 3.07-1.1 4.35-.16 3.07 2.6-1.43 3.09-7.46 15.33-7.46 15.33-.71 1.43.38 1.87 1.43.89 2.15-2.01 22.53-20.87 22.53-20.87z" />
-            </svg>
-          </Link>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+            </button>
 
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+            <Link to="/" className="flex-shrink-0">
+              <svg
+                className="h-6 w-16"
+                viewBox="0 0 69.67 30.19"
+                fill="currentColor"
+              >
+                <path d="M68.56 1.59C54.32 7.1 14.33 22.64 3.19 26.97c-3.7 1.44-6.53-.5-2.68-3.51 0 0 40.52-16.97 48.46-19.82 3.07-1.1 4.35-.16 3.07 2.6-1.43 3.09-7.46 15.33-7.46 15.33-.71 1.43.38 1.87 1.43.89 2.15-2.01 22.53-20.87 22.53-20.87z" />
+              </svg>
+            </Link>
+          </div>
+
+          {/* Center: Navigation (desktop) */}
+          <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
             <Link
               to="/products"
               className="text-tcnr01-base font-medium hover:text-tcnr01-gray-400 transition-colors"
@@ -83,8 +84,8 @@ export function Header() {
             </Link>
           </nav>
 
-          {/* Actions */}
-          <div className="flex items-center gap-2 md:gap-4">
+          {/* Right: Actions */}
+          <div className="flex items-center gap-2 md:gap-3 ml-auto flex-shrink-0">
             {/* Search */}
             {isSearchOpen ? (
               <form onSubmit={handleSearch} className="flex items-center">
@@ -94,7 +95,7 @@ export function Header() {
                   onChange={(e) => setSearchValue(e.target.value)}
                   placeholder="搜尋商品..."
                   autoFocus
-                  className="w-32 md:w-48 px-3 py-1.5 border border-tcnr01-gray-200 rounded-full text-tcnr01-sm focus:outline-none focus:ring-1 focus:ring-tcnr01-black"
+                  className="w-28 sm:w-36 md:w-48 px-3 py-1.5 border border-tcnr01-gray-200 rounded-full text-tcnr01-sm focus:outline-none focus:ring-1 focus:ring-tcnr01-black"
                 />
                 <button
                   type="button"
